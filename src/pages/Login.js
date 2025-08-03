@@ -137,6 +137,7 @@ const Login = () => {
           
           if (details.email) fieldErrors.push(`Email: ${details.email.join(', ')}`);
           if (details.password) fieldErrors.push(`Password: ${details.password.join(', ')}`);
+          if (details.password_confirm) fieldErrors.push(`Password Confirm: ${details.password_confirm.join(', ')}`);
           if (details.first_name) fieldErrors.push(`First Name: ${details.first_name.join(', ')}`);
           if (details.last_name) fieldErrors.push(`Last Name: ${details.last_name.join(', ')}`);
           if (details.phone) fieldErrors.push(`Phone: ${details.phone.join(', ')}`);
@@ -162,6 +163,12 @@ const Login = () => {
           const errorMessage = handleAPIError(error);
           setMessage({ type: 'error', text: errorMessage });
         }
+      } else if (error.message) {
+        // Handle errors that have a message but no response structure
+        setMessage({ 
+          type: 'error', 
+          text: error.message 
+        });
       } else {
         const errorMessage = handleAPIError(error);
         setMessage({ type: 'error', text: errorMessage });

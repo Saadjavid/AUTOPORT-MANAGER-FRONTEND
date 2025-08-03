@@ -21,13 +21,14 @@ const apiRequest = async (endpoint, options = {}) => {
   };
 
   try {
-    console.log(API_BASE_URL);
-    
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
     const data = await response.json();
     
     if (!response.ok) {
-      throw new Error(data.error?.message || 'API request failed');
+      // Create a more detailed error object that preserves the backend response
+      const apiError = new Error(data.error?.message || 'API request failed');
+      apiError.response = { data, status: response.status };
+      throw apiError;
     }
     
     return data;
@@ -301,7 +302,7 @@ export const handleAPIError = (error) => {
     return 'Registration failed: Invalid data format. Please check your information.';
   }
 
-  if (error.message.includes('User with this email already exists')) {
+  if (error.message.includes('User with this email already exists') || error.message.includes('User with this email address already exists')) {
     return 'Registration failed: An account with this email already exists. Please use a different email or try logging in.';
   }
 
@@ -333,6 +334,11 @@ export const handleAPIError = (error) => {
       // Check for password errors
       if (backendError.details.password) {
         fieldErrors.push(`Password: ${backendError.details.password.join(', ')}`);
+      }
+      
+      // Check for password_confirm errors
+      if (backendError.details.password_confirm) {
+        fieldErrors.push(`Password Confirm: ${backendError.details.password_confirm.join(', ')}`);
       }
       
       // Check for first_name errors

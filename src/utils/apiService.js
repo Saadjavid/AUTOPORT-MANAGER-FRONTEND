@@ -1,5 +1,5 @@
 // API Service for AutoPort Manager
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = "https://saad.waqarulwahab.me/api"
 
 // Helper function to get auth token
 const getAuthToken = () => {
@@ -21,6 +21,8 @@ const apiRequest = async (endpoint, options = {}) => {
   };
 
   try {
+    console.log(API_BASE_URL);
+    
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
     const data = await response.json();
     

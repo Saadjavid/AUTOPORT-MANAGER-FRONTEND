@@ -1,5 +1,5 @@
 // API Service for AutoPort Manager
-const API_BASE_URL = 'http://31.97.145.126:8057/api';
+const API_BASE_URL = 'https://saad.waqarulwahab.me/api';
 
 // Helper function to get auth token
 const getAuthToken = () => {

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPort Manager - Car Inventory Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .text-gradient { background: linear-gradient(135deg, #2563eb, #14b8a6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full">
+            <!-- Logo and Title -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-600 rounded-2xl mb-4 shadow-lg">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                        <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-gradient mb-2">AutoPort Manager</h1>
+                <p class="text-gray-600">Professional Car Inventory Management</p>
+            </div>
+
+            <!-- Demo Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-2">React Application</h2>
+                    <p class="text-gray-600 mb-6">
+                        This is a React-based car inventory management system. To run the full application, you need Node.js installed.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-blue-900 mb-2">Features Included:</h3>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li>• Beautiful Login/Signup System</li>
+                                <li>• Dashboard with Statistics Cards</li>
+                                <li>• Car Inventory Table with Search</li>
+                                <li>• Add/Edit Car Forms</li>
+                                <li>• Responsive Design</li>
+                                <li>• Professional UI/UX</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-medium text-green-900 mb-2">To Run the App:</h3>
+                            <div class="text-sm text-green-800 space-y-1">
+                                <p>1. Install Node.js</p>
+                                <p>2. Run: <code class="bg-green-100 px-2 py-1 rounded">npm install</code></p>
+                                <p>3. Run: <code class="bg-green-100 px-2 py-1 rounded">npm start</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8">
+                <p class="text-sm text-gray-500">
+                    © 2024 AutoPort Manager. Professional Car Inventory Management System.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

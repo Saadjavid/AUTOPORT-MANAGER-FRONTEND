@@ -12,6 +12,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
+
+
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -173,7 +175,8 @@ const Login = () => {
         const errorMessage = handleAPIError(error);
         setMessage({ type: 'error', text: errorMessage });
       }
-    } finally {
+      
+      // Ensure loading state is reset even if there's an error
       setLoading(false);
     }
   };
@@ -191,6 +194,7 @@ const Login = () => {
     });
     setErrors({});
     setMessage({ type: '', text: '' });
+    setLoading(false);
   };
 
   return (
@@ -216,6 +220,7 @@ const Login = () => {
           {/* Mode Toggle */}
           <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
             <button
+              type="button"
               onClick={() => !isLogin && toggleMode()}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
                 isLogin 
@@ -226,6 +231,7 @@ const Login = () => {
               Login
             </button>
             <button
+              type="button"
               onClick={() => isLogin && toggleMode()}
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
                 !isLogin 

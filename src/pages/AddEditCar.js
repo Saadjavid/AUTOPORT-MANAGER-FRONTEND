@@ -53,9 +53,17 @@ const AddEditCar = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === 'year' || name === 'quantity' || name === 'price' 
-      ? parseInt(value) || 0 
-      : value;
+    let newValue;
+    
+    if (name === 'price') {
+      // Use parseFloat for price to handle decimal values
+      newValue = parseFloat(value) || 0;
+    } else if (name === 'year' || name === 'quantity') {
+      // Use parseInt for year and quantity as they should be integers
+      newValue = parseInt(value) || 0;
+    } else {
+      newValue = value;
+    }
     
     setFormData(prev => ({
       ...prev,
@@ -131,8 +139,14 @@ const AddEditCar = () => {
     setMessage({ type: '', text: '' });
 
     try {
+      // Calculate and include total value in the form data
+      const dataToSubmit = {
+        ...formData,
+        totalValue: formData.quantity * formData.price // Ensure total value is included
+      };
+
       if (isEditing) {
-        const response = await carsAPI.updateCar(id, formData);
+        const response = await carsAPI.updateCar(id, dataToSubmit);
         if (response.success) {
           setMessage({ type: 'success', text: 'Car updated successfully!' });
           // Set flag to refresh dashboard
@@ -140,7 +154,7 @@ const AddEditCar = () => {
           setTimeout(() => navigate('/dashboard'), 1500);
         }
       } else {
-        const response = await carsAPI.createCar(formData);
+        const response = await carsAPI.createCar(dataToSubmit);
         if (response.success) {
           setMessage({ type: 'success', text: 'Car added successfully!' });
           // Set flag to refresh dashboard
@@ -225,20 +239,20 @@ const AddEditCar = () => {
               <label className="block text-sm font-medium text-gray-700 mb-4">
                 Car Image
               </label>
-              <div className="flex items-center space-x-6">
+              <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <div className="flex-shrink-0">
                   <img
                     src={formData.image}
                     alt="Car preview"
-                    className="h-32 w-48 object-cover rounded-lg shadow-sm border border-gray-200"
+                    className="h-32 w-full sm:w-48 object-cover rounded-lg shadow-sm border border-gray-200"
                     onError={(e) => {
                       e.target.src = 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop';
                     }}
                   />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center space-x-4">
-                    <label className="btn-secondary cursor-pointer flex items-center space-x-2">
+                <div className="flex-1 w-full">
+                  <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:items-center sm:space-x-4">
+                    <label className="w-full sm:w-auto btn-secondary cursor-pointer flex items-center justify-center space-x-2">
                       <Upload className="h-4 w-4" />
                       <span>Upload Image</span>
                       <input
@@ -251,7 +265,7 @@ const AddEditCar = () => {
                     <button
                       type="button"
                       onClick={() => setFormData(prev => ({ ...prev, image: '' }))}
-                      className="btn-secondary flex items-center space-x-2"
+                      className="w-full sm:w-auto btn-secondary flex items-center justify-center space-x-2"
                     >
                       <X className="h-4 w-4" />
                       <span>Remove</span>
@@ -264,8 +278,8 @@ const AddEditCar = () => {
               </div>
             </div>
 
-            {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Additional Information */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="model" className="block text-sm font-medium text-gray-700 mb-2">
                   Car Model *

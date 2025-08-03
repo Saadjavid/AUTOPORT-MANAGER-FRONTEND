@@ -101,22 +101,36 @@ const Dashboard = () => {
       if (carsResponse.success) {
         // Ensure cars is always an array and has proper structure
         const carsData = carsResponse.cars || [];
-        const processedCars = carsData.map(car => ({
-          id: car.id,
-          model: car.model || 'N/A',
-          year: car.year || 'N/A',
-          quantity: car.quantity || 0,
-          price: car.price || 0,
-          status: car.status || 'N/A',
-          country: car.country || 'N/A',
-          image: car.image || '',
-          totalValue: car.totalValue || 0,
-          user: car.user || 'N/A',
-          created_at: car.created_at || '',
-          updated_at: car.updated_at || '',
-          formatted_price: car.formatted_price || '$0',
-          formatted_total_value: car.formatted_total_value || '$0'
-        }));
+        const processedCars = carsData.map(car => {
+          // Get quantity and price with fallbacks
+          const quantity = car.quantity || 0;
+          const price = car.price || 0;
+          
+          // Calculate totalValue if it's missing or zero
+          const calculatedTotalValue = quantity * price;
+          const totalValue = (car.totalValue && car.totalValue > 0) ? car.totalValue : calculatedTotalValue;
+          
+          // Format price and totalValue
+          const formatted_price = car.formatted_price || `$${price.toLocaleString()}`;
+          const formatted_total_value = car.formatted_total_value || `$${calculatedTotalValue.toLocaleString()}`;
+          
+          return {
+            id: car.id,
+            model: car.model || 'N/A',
+            year: car.year || 'N/A',
+            quantity: quantity,
+            price: price,
+            status: car.status || 'N/A',
+            country: car.country || 'N/A',
+            image: car.image || '',
+            totalValue: totalValue,  // Use calculated value if API doesn't provide it
+            user: car.user || 'N/A',
+            created_at: car.created_at || '',
+            updated_at: car.updated_at || '',
+            formatted_price: formatted_price,
+            formatted_total_value: formatted_total_value
+          };
+        });
         setCars(processedCars);
       }
 
@@ -152,22 +166,36 @@ const Dashboard = () => {
       const carsResponse = await carsAPI.getAllCars();
       if (carsResponse.success) {
         const carsData = carsResponse.cars || [];
-        const processedCars = carsData.map(car => ({
-          id: car.id,
-          model: car.model || 'N/A',
-          year: car.year || 'N/A',
-          quantity: car.quantity || 0,
-          price: car.price || 0,
-          status: car.status || 'N/A',
-          country: car.country || 'N/A',
-          image: car.image || '',
-          totalValue: car.totalValue || 0,
-          user: car.user || 'N/A',
-          created_at: car.created_at || '',
-          updated_at: car.updated_at || '',
-          formatted_price: car.formatted_price || '$0',
-          formatted_total_value: car.formatted_total_value || '$0'
-        }));
+        const processedCars = carsData.map(car => {
+          // Get quantity and price with fallbacks
+          const quantity = car.quantity || 0;
+          const price = car.price || 0;
+          
+          // Calculate totalValue if it's missing or zero
+          const calculatedTotalValue = quantity * price;
+          const totalValue = (car.totalValue && car.totalValue > 0) ? car.totalValue : calculatedTotalValue;
+          
+          // Format price and totalValue
+          const formatted_price = car.formatted_price || `$${price.toLocaleString()}`;
+          const formatted_total_value = car.formatted_total_value || `$${calculatedTotalValue.toLocaleString()}`;
+          
+          return {
+            id: car.id,
+            model: car.model || 'N/A',
+            year: car.year || 'N/A',
+            quantity: quantity,
+            price: price,
+            status: car.status || 'N/A',
+            country: car.country || 'N/A',
+            image: car.image || '',
+            totalValue: totalValue,  // Use calculated value if API doesn't provide it
+            user: car.user || 'N/A',
+            created_at: car.created_at || '',
+            updated_at: car.updated_at || '',
+            formatted_price: formatted_price,
+            formatted_total_value: formatted_total_value
+          };
+        });
         setCars(processedCars);
       }
     } catch (error) {
@@ -369,7 +397,7 @@ const Dashboard = () => {
           <div className="p-4 border-b border-gray-200">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-teal-500 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-white" />
+                <span className="text-white text-lg font-bold">{(user?.name || 'U')[0].toUpperCase()}</span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-gray-900 truncate">{user?.name || 'User'}</p>
@@ -710,7 +738,7 @@ const Dashboard = () => {
                   {/* Profile Picture */}
                   <div className="flex items-center space-x-4">
                     <div className="w-20 h-20 bg-gradient-to-r from-primary-500 to-teal-500 rounded-full flex items-center justify-center">
-                      <User className="w-10 h-10 text-white" />
+                      <span className="text-white text-2xl font-bold">{(userProfile.first_name || 'U')[0].toUpperCase()}</span>
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900">{userProfile.first_name} {userProfile.last_name}</h4>
